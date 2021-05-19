@@ -52,7 +52,7 @@
                                         type="submit"
                                         value="Eliminar"
                                         class="btn btn-sm btn-danger"
-                                        onclick="return comfirm('Desea eliminar?')"
+                                        onclick="return confirm('Desea eliminar?')"
                                         >
                                     </form>
                                 </td>
