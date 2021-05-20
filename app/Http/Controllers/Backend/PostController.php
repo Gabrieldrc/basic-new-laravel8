@@ -99,16 +99,16 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        // dd($request->all());
-        $image = [];
+        // edito solo esos campos si no viene file
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->iframe = $request->iframe;
+        // si viene con file
         if ($request->file('file')) {
-            //eliminar imagen
             Storage::disk('public')->delete($post->image);
-            $imageSrc = $request->file('file')->store('posts', 'public');
-            $image['image'] = $imageSrc;
+            $post->image = $request->file('file')->store('posts', 'public');
         }
-        $post->update($request->all()+$image);
-
+        $post->save();
 
         return back()->with('status', 'Actualizado con exito');
     }
