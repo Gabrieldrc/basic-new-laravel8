@@ -6,6 +6,13 @@
         <div class="col-md-8">
             @foreach ($posts as $post)
             <div class="card mb-4">
+                @if ($post->image)
+                    <img src="{{ $post->get_image }}" alt="Image de post" class="card-img-top">
+                @elseif ($post->iframe)
+                    <div class="embed-responsive embed-responsive-16by9">
+                        {!! $post->iframe !!}
+                    </div>
+                @endif
                 <div class="card-body">
                     <h5 class="card-title">{{ $post->title }}</h5>
                     <p class="card-text">

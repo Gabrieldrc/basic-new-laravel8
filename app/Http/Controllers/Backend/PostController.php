@@ -50,7 +50,7 @@ class PostController extends Controller
         $post = new Post();
         $post->fill([
             'user_id' => auth()->user()->id,
-        ] + $request->validated());
+        ] + $request->all());
         //image
         if ($request->file('file')) {
             /**
@@ -99,16 +99,14 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        // edito solo esos campos si no viene file
-        $post->title = $request->title;
-        $post->body = $request->body;
-        $post->iframe = $request->iframe;
-        // si viene con file
+        $post->update($request->all());
+        // dd($request->all());
+
         if ($request->file('file')) {
             Storage::disk('public')->delete($post->image);
             $post->image = $request->file('file')->store('posts', 'public');
+            $post->save();
         }
-        $post->save();
 
         return back()->with('status', 'Actualizado con exito');
     }
